@@ -21,7 +21,7 @@ jobs:
           
       - name: Terraform plan
         id: plan
-        if: steps.check-comment.outputs.match == "true"
+        if: ${{ steps.check-comment.outputs.match }}
         run: |
           terraform plan -no-color -input=false
       
