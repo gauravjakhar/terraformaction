@@ -36,7 +36,7 @@ jobs:
       - name: Terraform plan
         id: plan
         run: |
-          if [[ ${{ steps.check-comment.outputs.triggerplan }} == "true" ]]; then            
+          if [[ ${{ steps.check-comment.outputs.triggerplan }} == true ]]; then            
             terraform plan -no-color -input=false
             echo "Terraform plan trigerred..."
       
