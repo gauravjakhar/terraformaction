@@ -15,13 +15,15 @@ jobs:
           COMMENT_BODY="${{ github.event.comment.body }}"
           if [[ "$COMMENT_BODY" == "terraform plan" ]]; then
             echo "Triggering Terraform plan..."
+            echo "triggerplan=true" >> $GITHUB_OUTPUT
           else
-            exit 0
+             echo "triggerplan=false" >> $GITHUB_OUTPUT
+             exit 0
           fi
           
       - name: Terraform plan
         id: plan
-        if: ${{ steps.check-comment.outputs.match }}
+        if: ${{ steps.check-comment.outputs.triggerplan }}
         run: |
           terraform plan -no-color -input=false
       
