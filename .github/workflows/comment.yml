@@ -20,12 +20,25 @@ jobs:
              echo "triggerplan=false" >> $GITHUB_OUTPUT
              exit 0
           fi
-          
+
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.3.0
+      
+      - name: Terraform init
+        id: init
+        run: terraform init 
+        
       - name: Terraform plan
         id: plan
-        if: ${{ steps.check-comment.outputs.triggerplan }} == 'true'
         run: |
-          terraform plan -no-color -input=false
+          if [[ ${{ steps.check-comment.outputs.triggerplan }} == "true" ]]; then            
+            terraform plan -no-color -input=false
+            echo "Terraform plan trigerred..."
       
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
