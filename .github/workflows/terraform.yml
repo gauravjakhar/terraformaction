@@ -60,6 +60,7 @@ jobs:
           && terraform show -json tfplan.plan | grep '^{.*}$' > tfplan.json
           PLAN_JSON=$(cat plan_output.txt)
           echo "::set-output name=plan_json::$PLAN_JSON"
+          run: echo "terraform_output=$PLAN_JSON" >> $GITHUB_OUTPUT
         continue-on-error: true
 
       - name: 💮 OPA
@@ -81,7 +82,7 @@ jobs:
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
             #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outputs.terraform_output }}\`
 
             <details><summary>Show Plan</summary>
 
