@@ -55,8 +55,10 @@ jobs:
         id: plan
         if: github.event_name == 'pull_request'
         run: |
-          terraform plan -no-color -input=false -out=tfplan.plan && terraform show -json tfplan.plan | grep '^{.*}$' > tfplan.json
-          PLAN_JSON=$(cat tfplan.json)
+          terraform plan -no-color -input=false > plan_output.txt \
+          && terraform plan -no-color -input=false -out=tfplan.plan \
+          && terraform show -json tfplan.plan | grep '^{.*}$' > tfplan.json
+          PLAN_JSON=$(cat plan_output.txt)
           echo "::set-output name=plan_json::$PLAN_JSON"
         continue-on-error: true
 
