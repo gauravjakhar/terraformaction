@@ -55,12 +55,13 @@ jobs:
         id: plan
         if: github.event_name == 'pull_request'
         run: |
-          terraform plan --out tfplan.binary
+          terraform plan -no-color -input=false          
         continue-on-error: true
 
       - name: 💮 OPA
         id: opa
         run: |
+          terraform plan --out tfplan.binary
           terraform show -json tfplan.binary > tfplan.json
           curl -L -o opa https://openpolicyagent.org/downloads/v0.64.1/opa_linux_amd64_static \
             && chmod 755 ./opa && ./opa version
