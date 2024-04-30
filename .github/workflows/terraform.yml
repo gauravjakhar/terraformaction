@@ -56,8 +56,9 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           PLAN_OUTPUT=$(terraform plan -no-color -input=false -out=tfplan.plan)
-          terraform show -json tfplan.plan | grep '^{.*}$' > tfplan.json   
-          echo "terraform_output=$PLAN_OUTPUT" >> $GITHUB_OUTPUT
+          terraform show -json tfplan.plan | grep '^{.*}$' > tfplan.json
+          echo "OUTPUTTTTTTTTTT: $PLAN_OUTPUT"
+          echo "terraformoutput=$PLAN_OUTPUT" >> $GITHUB_OUTPUT
         continue-on-error: true
 
       - name: 💮 OPA
@@ -79,7 +80,7 @@ jobs:
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
             #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outputs.terraform_output }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outputs.terraformoutput }}\`
 
             <details><summary>Show Plan</summary>
 
