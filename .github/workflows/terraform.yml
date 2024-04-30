@@ -58,9 +58,8 @@ jobs:
           terraform plan -no-color -input=false > plan_output.txt \
           && terraform plan -no-color -input=false -out=tfplan.plan \
           && terraform show -json tfplan.plan | grep '^{.*}$' > tfplan.json
-          PLAN_JSON=$(cat plan_output.txt)
-          echo "::set-output name=plan_json::$PLAN_JSON"
-          run: echo "terraform_output=$PLAN_JSON" >> $GITHUB_OUTPUT
+          PLAN_JSON=$(cat plan_output.txt)      
+          echo "terraform_output=$PLAN_JSON" >> $GITHUB_OUTPUT
         continue-on-error: true
 
       - name: 💮 OPA
