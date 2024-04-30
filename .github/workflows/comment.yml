@@ -12,8 +12,8 @@ jobs:
       - name: "Check comment"
         id: check-comment
         run: |
-          COMMENT_BODY="${{ github.event.comment.body }}"
-          if [[ "$COMMENT_BODY" == "terraform plan" ]]; then
+          echo "Comment is ${{ github.event.comment.body }}"
+          if [[ "${{ github.event.comment.body }}" == "terraform plan" ]]; then
             echo "Triggering Terraform plan..."
             echo "triggerplan=true" >> $GITHUB_OUTPUT
           else
@@ -36,7 +36,7 @@ jobs:
       - name: Terraform plan
         id: plan
         run: |
-          if [[ ${{ steps.check-comment.outputs.triggerplan }} == true ]]; then            
+          if [[ ${{ steps.check-comment.outputs.triggerplan }}]]; then            
             terraform plan -no-color -input=false
             echo "Terraform plan trigerred..."
       
