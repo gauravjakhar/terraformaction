@@ -38,7 +38,9 @@ jobs:
       - name: Terraform init
         if: steps.check-comment.outputs.triggerplan == 'true'
         id: init
-        run: terraform init 
+        run: |
+          cd ${{ github.workspace }}/terraform/
+          terraform init 
         
       - name: Terraform plan
         id: plan
