@@ -6,13 +6,13 @@ terraform {
 }
 
 provider "null" {
- 
+  # NULL .
 }
 
 # Basic resource with no actual provisioning
 resource "null_resource" "example" {
   triggers = {
-    always_run = "${timestamp()}"
+    always_run = timestamp()
   }
 }
 
