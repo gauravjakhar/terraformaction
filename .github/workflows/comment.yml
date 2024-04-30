@@ -35,10 +35,10 @@ jobs:
         
       - name: Terraform plan
         id: plan
+        if: ${{ steps.check-comment.outputs.triggerplan }} == true
         run: |
-          if [[ ${{ steps.check-comment.outputs.triggerplan }}]]; then            
-            terraform plan -no-color -input=false
-            echo "Terraform plan trigerred..."
+          terraform plan -no-color -input=false
+          echo "Terraform plan trigerred..."
       
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
