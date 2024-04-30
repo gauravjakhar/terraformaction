@@ -46,6 +46,7 @@ jobs:
         id: plan
         if: steps.check-comment.outputs.triggerplan == 'true'
         run: |
+          cd ${{ github.workspace }}/terraform/
           terraform plan -no-color -input=false
           echo "Terraform plan trigerred..."
       
