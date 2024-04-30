@@ -1,12 +1,11 @@
 name: "Trigger Terraform Plan on Comment"
 
-on:
-  issue_comment:
-    types: [created]
+on: issue_comment
 
 jobs:
   terraform-plan:
     name: "Run Terraform Plan on Comment"
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
 
     steps:
