@@ -18,5 +18,5 @@ resource "null_resource" "example" {
 
 # Output to test the configuration
 output "example_output" {
-  value = "Hello, Terraform - TEST!!!"
+  value = "Hello, Terraform - TEST!!"
 }
